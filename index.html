@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>For Shellene Bruno ❤️</title>
+<style>
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  font-family: 'Georgia', serif;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #2b000f, #4a0018, #3b000f, #6a001a);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+  color: #f5e6e8;
+}
+
+@keyframes gradientShift {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* Sections */
+section {
+  width: 100%; height: 100%;
+  position: absolute; top:0; left:0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center; padding: 20px;
+  z-index: 1; transition:opacity 1s ease;
+}
+
+.hidden {opacity:0; pointer-events:none;}
+
+/* Name and Lines */
+.name {
+  font-size: 3em; color: gold;
+  text-shadow:0 0 15px gold,0 0 40px #ffd700;
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease forwards;
+}
+
+.line {
+  font-size: 1.3em;
+  margin: 5px 0;
+  color: #f5e6e8;
+  background: rgba(139,0,0,0.4);
+  padding: 5px 15px;
+  border-radius: 10px;
+  display: inline-block;
+  opacity: 0;
+  animation: fadeLine 2s ease forwards;
+}
+.line:nth-child(2){ animation-delay: 0.5s; }
+.line:nth-child(3){ animation-delay: 1s; }
+.line:nth-child(4){ animation-delay: 1.5s; }
+
+@keyframes fadeIn { from {opacity:0; transform: translateY(20px);} to {opacity:1; transform:translateY(0);} }
+@keyframes fadeLine { to {opacity:1;} }
+
+/* Buttons */
+button {
+  margin-top: 25px;
+  padding: 15px 40px;
+  border-radius: 50px;
+  border: 2px solid gold;
+  background: transparent;
+  color: gold;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: 0.4s;
+  animation: pulse 2s infinite;
+}
+button:hover {background: gold; color:#2b000f; transform: scale(1.1);}
+@keyframes pulse {0%,100%{box-shadow:0 0 10px gold;}50%{box-shadow:0 0 25px gold;}}
+/* Floating particles */
+.particle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 200, 200, 0.2);
+  border-radius: 50%;
+  animation: floatParticle linear infinite;
+  z-index: 1;
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-1200px); }
+}
+
+/* Cats */
+.cat { position: fixed; bottom: 10px; font-size: 70px; animation: walk linear infinite; z-index: 2; }
+@keyframes walk {0%{left:-10%;}100%{left:110%;}}
+
+/* Image container */
+.image-container {position:relative; display:flex; flex-direction:column; align-items:center;}
+.image-container img {
+  width: 90%;
+  max-width: 350px;  border-radius: 20px;
+  box-shadow: 0 0 80px rgba(178,34,34,0.8), 0 0 120px rgba(178,34,34,0.6);
+  margin-top: 20px;
+  border: 5px solid #8B0000;
+  animation: fadeIn 2s ease forwards;
+}
+
+/* Heart explosion */
+.heart {
+  position: fixed; font-size: 50px;
+  z-index: 999;
+  animation: explode 1.8s ease-out forwards;
+}
+@keyframes explode {
+  from{transform:translate(0,0) scale(0); opacity:1;}
+  to{transform:translate(var(--x), var(--y)) scale(1.5); opacity:0;}
+}
+
+/* Floating small hearts */
+.float-heart {
+  position: fixed; font-size: 30px; color: #b22222;
+  animation: floatUp 6s linear forwards;
+}
+@keyframes floatUp {from{transform:translateY(0); opacity:1;} to{transform:translateY(-800px); opacity:0;}}
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Add this inside <body> at the very top -->
+
+<!-- Video background -->
+<video autoplay muted loop playsinline id="bgVideo" style="
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+">
+  <source src="Water.mp4" type="video/mp4">
+</video>
+
+
+<!-- Dim overlay -->
+<div style="
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); /* adjust alpha 0.2 ~ 0.6 for dimness */
+    z-index: 0;
+    pointer-events: none;
+"></div>
+
+
+<!-- Floating particles -->
+<script>
+for(let i=0;i<50;i++){
+  let p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.top=Math.random()*100+"vh";
+  p.style.width=3+Math.random()*5+"px";
+  p.style.height=3+Math.random()*5+"px";
+  p.style.animationDuration=5+Math.random()*15+"s";
+  document.body.appendChild(p);
+}
+</script>
+
+<!-- Cats -->
+<script>
+const catEmojis=["🐈","🐈‍⬛","🐾","🐱","😺","😻"];
+catEmojis.forEach((emoji,i)=>{
+  let cat=document.createElement("div");
+  cat.className="cat";
+  cat.innerHTML=emoji;
+  cat.style.bottom=10+i*70+"px";
+  cat.style.animationDuration=12+i*4+"s";
+  document.body.appendChild(cat);
+});
+</script>
+
+<!-- FIRST PAGE -->
+<section id="page1">
+  <div class="name">Shellene Bruno</div>
+  <div class="line">You entered my life quietly.</div>
+  <div class="line">But somehow,</div>
+  <div class="line">you became my favorite everything.</div>
+  <button onclick="nextPage()">Click Me →</button>
+</section>
+
+<!-- SECOND PAGE -->
+<section id="page2" class="hidden">
+  <div class="image-container">
+    <img src="image1.jpeg" alt="Shellene">
+    <div class="line" style="margin-top:15px;">Fill in the blank to see a surprise!</div>
+    <input type="text" id="answerInput" placeholder="Type 'love'" style="padding:10px 15px; margin-top:10px; border-radius:10px; border:2px solid gold; font-size:1em;">
+    <button onclick="checkAnswer()">Submit</button>
+  </div>
+</section>
+
+<script>
+function nextPage(){
+  document.getElementById("page1").classList.add("hidden");
+  document.getElementById("page2").classList.remove("hidden");
+}
+// Heart rain from top
+function createFallingHeart() {
+  const heart = document.createElement("div");
+  heart.className = "float-heart";
+  heart.innerHTML = "♥";
+  
+  // Random horizontal position
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.top = "-50px"; // start above the screen
+  heart.style.fontSize = 25 + Math.random()*20 + "px"; // random size
+  heart.style.color = ["#8B0000","#b22222","#ff4d6d"][Math.floor(Math.random()*3)]; // maroon-red mix
+  heart.style.animation = `fall ${3 + Math.random()*3}s linear forwards`; // random speed
+  document.body.appendChild(heart);
+
+  // Remove heart after it falls
+  setTimeout(() => heart.remove(), 7000);
+}
+
+// Create heart rain continuously
+setInterval(createFallingHeart, 200); // every 0.2s a heart is created
+
+/* Big Heart Explosion */
+function explodeHearts(x,y,count=70){
+  for(let i=0;i<count;i++){
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="♥ Shellene ♥";
+    heart.style.left=(x||window.innerWidth/2)+"px";
+    heart.style.top=(y||window.innerHeight/2)+"px";
+    let angle=Math.random()*2*Math.PI;
+    let radius=300+Math.random()*100;
+    heart.style.setProperty('--x',Math.cos(angle)*radius+'px');
+    heart.style.setProperty('--y',Math.sin(angle)*radius+'px');
+    heart.style.color=`rgb(${128+Math.random()*127},0,0)`;
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),1800);
+  }
+}
+
+/* Check the fill-in-the-blank answer */
+function checkAnswer(){
+  const input = document.getElementById("answerInput");
+  if(input.value.toLowerCase() === "love"){
+    explodeHearts();
+    // also add continuous small hearts
+    let interval = setInterval(()=>{
+      let fh = document.createElement("div");
+      fh.className="float-heart";
+      fh.innerHTML="♥";
+      fh.style.left=Math.random()*100+"vw";
+      fh.style.bottom="0px";
+      document.body.appendChild(fh);
+      setTimeout(()=>fh.remove(),6000);
+    },40);
+    // reveal a touching message
+    setTimeout(()=>{
+      clearInterval(interval);
+      alert("You filled it correctly! Shellene, you are my ❤️");
+    },5000);
+  } else {
+    alert("Try again!");
+  }
+}
+</script>
+
+</body>
+</html>
